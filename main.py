@@ -36,7 +36,7 @@ while True:
         amount_consumed = agent.consume(selected_material)
 
         if previous_amount > amount_consumed:
-            print(datetime.now(), "Consuming:", selected_material.article_number, selected_material.material_name, amount_consumed, selected_material.total_quantity)
+            print(datetime.now(), "Consuming:", selected_material.article_number, amount_consumed, selected_material.total_quantity)
 
     wait = randrange(3, 15)
 
