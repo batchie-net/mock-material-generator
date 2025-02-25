@@ -1,16 +1,17 @@
-# This is a sample Python script.
+from Agent import Agent
+from materials import Material
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+agent = Agent()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+paprika = Material("PA-021", "Paprika", "3","Veg")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(paprika.total_quantity)
+
+agent.produce(paprika)
+
+print(paprika.total_quantity)
+
+agent.consume(paprika)
+
+print(paprika.total_quantity)
