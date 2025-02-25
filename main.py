@@ -1,6 +1,6 @@
 from Agent import Agent
 from materials import Material
-from random import choice, randint
+from random import choice, randint, randrange
 from time import sleep
 from datetime import datetime
 
@@ -28,8 +28,7 @@ while True:
 
     if action == 1:
         amount_produced = agent.produce(selected_material)
-        print("Producing", amount_produced)
-        print(datetime.now(), selected_material.article_number, selected_material.material_name, selected_material.total_quantity)
+        print(datetime.now(), "Producing:", selected_material.article_number, amount_produced, selected_material.total_quantity)
 
     if action == 0:
 
@@ -37,7 +36,8 @@ while True:
         amount_consumed = agent.consume(selected_material)
 
         if previous_amount > amount_consumed:
-            print("Consuming", amount_consumed)
-            print(datetime.now(), selected_material.article_number, selected_material.material_name, selected_material.total_quantity)
+            print(datetime.now(), "Consuming:", selected_material.article_number, selected_material.material_name, amount_consumed, selected_material.total_quantity)
 
-    sleep(3)
+    wait = randrange(3, 15)
+
+    sleep(wait)
