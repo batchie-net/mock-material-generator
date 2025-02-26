@@ -1,2 +1,5 @@
 /venv/
 *.idea
+/influx-db/.env.influxdb2-admin-password
+/influx-db/.env.influxdb2-admin-token
+/influx-db/.env.influxdb2-admin-username

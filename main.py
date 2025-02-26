@@ -4,6 +4,18 @@ from random import choice, randint, randrange
 from time import sleep
 from datetime import datetime
 
+import influxdb_client, os, time
+from influxdb_client import InfluxDBClient, Point, WritePrecision
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+token = os.environ.get("INFLUXDB_TOKEN")
+org = "docs"
+url = "http://localhost:8086"
+
+client = influxdb_client.InfluxDBClient(url=url, token=token, org=org, )
+bucket = "dev-material-transactions"
+write_api = client.write_api(write_options=SYNCHRONOUS)
+
 agent = Agent()
 
 
@@ -29,6 +41,13 @@ while True:
     if action == 1:
         amount_produced = agent.produce(selected_material)
         print(datetime.now(), "Producing:", selected_material.article_number, amount_produced, selected_material.total_quantity)
+        p = influxdb_client.Point("Transactions")\
+            .time(datetime.utcnow())\
+            .tag("action", "producing")\
+            .tag("article_number", selected_material.article_number)\
+            .field("amount", amount_produced)\
+            .field("total_quantity", selected_material.total_quantity)
+        write_api.write(bucket=bucket, org=org, record=p)
 
     if action == 0:
 
@@ -37,6 +56,13 @@ while True:
 
         if previous_amount > amount_consumed:
             print(datetime.now(), "Consuming:", selected_material.article_number, amount_consumed, selected_material.total_quantity)
+            p = influxdb_client.Point("Transactions") \
+                .time(datetime.utcnow()) \
+                .tag("action", "consuming") \
+                .tag("article_number", selected_material.article_number) \
+                .field("amount", amount_consumed) \
+                .field("total_quantity", selected_material.total_quantity)
+            write_api.write(bucket=bucket, org=org, record=p)
 
     wait = randrange(3, 15)
 
