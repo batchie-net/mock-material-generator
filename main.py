@@ -11,5 +11,4 @@ while True:
 
     agent.decide(articles)
     wait = randrange(3, 15)
-
     sleep(wait)
